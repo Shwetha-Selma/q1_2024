@@ -58,7 +58,7 @@ int main(int argc, char **argv) {
 
   // initialize the GPU, either identified by --device
   // or by picking the device with highest flop rate.
-  int devID = findCudaDevice(argc, (const char **)argv);
+  //  int devID = findCudaDevice(argc, (const char **)argv);
 
   // parsing the number of random numbers to generate
   int rand_n = DEFAULT_RAND_N;
