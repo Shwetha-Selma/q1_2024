@@ -1,0 +1,406 @@
+---
+MainSourceFile:  '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes/MainSrcFiles_placehold'
+Replacements:
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes/BlackScholes.cu'
+    Offset:          1736
+    Length:          0
+    ReplacementText: "#include <sycl/sycl.hpp>\n#include <dpct/dpct.hpp>\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes/BlackScholes.cu'
+    Offset:          2583
+    Length:          34
+    ReplacementText: '#include "BlackScholes_kernel.dp.hpp"'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes/BlackScholes.cu'
+    Offset:          2617
+    Length:          0
+    ReplacementText: "\n#include <cmath>\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes/BlackScholes.cu'
+    Offset:          4851
+    Length:          42
+    ReplacementText: 'DPCT_CHECK_ERROR(d_CallResult = (float *)sycl::malloc_device(OPT_SZ, dpct::get_in_order_queue()))'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes/BlackScholes.cu'
+    Offset:          4914
+    Length:          41
+    ReplacementText: 'DPCT_CHECK_ERROR(d_PutResult = (float *)sycl::malloc_device(OPT_SZ, dpct::get_in_order_queue()))'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes/BlackScholes.cu'
+    Offset:          4976
+    Length:          42
+    ReplacementText: 'DPCT_CHECK_ERROR(d_StockPrice = (float *)sycl::malloc_device(OPT_SZ, dpct::get_in_order_queue()))'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes/BlackScholes.cu'
+    Offset:          5039
+    Length:          44
+    ReplacementText: 'DPCT_CHECK_ERROR(d_OptionStrike = (float *)sycl::malloc_device(OPT_SZ, dpct::get_in_order_queue()))'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes/BlackScholes.cu'
+    Offset:          5104
+    Length:          43
+    ReplacementText: 'DPCT_CHECK_ERROR(d_OptionYears = (float *)sycl::malloc_device(OPT_SZ, dpct::get_in_order_queue()))'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes/BlackScholes.cu'
+    Offset:          5621
+    Length:          10
+    ReplacementText: 'DPCT_CHECK_ERROR(dpct::get_in_order_queue().memcpy'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes/BlackScholes.cu'
+    Offset:          5666
+    Length:          24
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes/BlackScholes.cu'
+    Offset:          5691
+    Length:          0
+    ReplacementText: '.wait())'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes/BlackScholes.cu'
+    Offset:          5712
+    Length:          10
+    ReplacementText: 'DPCT_CHECK_ERROR(dpct::get_in_order_queue().memcpy'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes/BlackScholes.cu'
+    Offset:          5761
+    Length:          53
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes/BlackScholes.cu'
+    Offset:          5815
+    Length:          0
+    ReplacementText: '.wait())'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes/BlackScholes.cu'
+    Offset:          5843
+    Length:          10
+    ReplacementText: 'DPCT_CHECK_ERROR(dpct::get_in_order_queue().memcpy'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes/BlackScholes.cu'
+    Offset:          5890
+    Length:          24
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes/BlackScholes.cu'
+    Offset:          5915
+    Length:          0
+    ReplacementText: '.wait())'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes/BlackScholes.cu'
+    Offset:          6064
+    Length:          23
+    ReplacementText: 'DPCT_CHECK_ERROR(dpct::get_current_device().queues_wait_and_throw())'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes/BlackScholes.cu'
+    Offset:          6188
+    Length:          239
+    ReplacementText: "dpct::get_in_order_queue().submit(\n      [&](sycl::handler &cgh) {\n        float RISKFREE_ct5 = RISKFREE;\n        float VOLATILITY_ct6 = VOLATILITY;\n        int OPT_N_ct7 = OPT_N;\n\n        cgh.parallel_for(\n          sycl::nd_range<3>(sycl::range<3>(1, 1, DIV_UP((OPT_N / 2), 128)) * sycl::range<3>(1, 1, 128), sycl::range<3>(1, 1, 128)), \n          [=](sycl::nd_item<3> item_ct1) {\n            BlackScholesGPU((sycl::float2 *)d_CallResult, (sycl::float2 *)d_PutResult, (sycl::float2 *)d_StockPrice, (sycl::float2 *)d_OptionStrike, (sycl::float2 *)d_OptionYears, RISKFREE_ct5, VOLATILITY_ct6, OPT_N_ct7, item_ct1);\n          });\n      });"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: true
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes/BlackScholes.cu'
+    Offset:          6427
+    Length:          1
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes/BlackScholes.cu'
+    Offset:          6514
+    Length:          23
+    ReplacementText: 'DPCT_CHECK_ERROR(dpct::get_current_device().queues_wait_and_throw())'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes/BlackScholes.cu'
+    Offset:          7388
+    Length:          10
+    ReplacementText: 'DPCT_CHECK_ERROR(dpct::get_in_order_queue().memcpy'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes/BlackScholes.cu'
+    Offset:          7436
+    Length:          53
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes/BlackScholes.cu'
+    Offset:          7490
+    Length:          0
+    ReplacementText: '.wait())'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes/BlackScholes.cu'
+    Offset:          7518
+    Length:          10
+    ReplacementText: 'DPCT_CHECK_ERROR(dpct::get_in_order_queue().memcpy'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes/BlackScholes.cu'
+    Offset:          7564
+    Length:          24
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes/BlackScholes.cu'
+    Offset:          7589
+    Length:          0
+    ReplacementText: '.wait())'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes/BlackScholes.cu'
+    Offset:          8485
+    Length:          23
+    ReplacementText: 'DPCT_CHECK_ERROR(dpct::dpct_free(d_OptionYears, dpct::get_in_order_queue())'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes/BlackScholes.cu'
+    Offset:          8508
+    Length:          0
+    ReplacementText: ')'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes/BlackScholes.cu'
+    Offset:          8529
+    Length:          24
+    ReplacementText: 'DPCT_CHECK_ERROR(dpct::dpct_free(d_OptionStrike, dpct::get_in_order_queue())'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes/BlackScholes.cu'
+    Offset:          8553
+    Length:          0
+    ReplacementText: ')'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes/BlackScholes.cu'
+    Offset:          8574
+    Length:          22
+    ReplacementText: 'DPCT_CHECK_ERROR(dpct::dpct_free(d_StockPrice, dpct::get_in_order_queue())'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes/BlackScholes.cu'
+    Offset:          8596
+    Length:          0
+    ReplacementText: ')'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes/BlackScholes.cu'
+    Offset:          8617
+    Length:          21
+    ReplacementText: 'DPCT_CHECK_ERROR(dpct::dpct_free(d_PutResult, dpct::get_in_order_queue())'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes/BlackScholes.cu'
+    Offset:          8638
+    Length:          0
+    ReplacementText: ')'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes/BlackScholes.cu'
+    Offset:          8659
+    Length:          22
+    ReplacementText: 'DPCT_CHECK_ERROR(dpct::dpct_free(d_CallResult, dpct::get_in_order_queue())'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes/BlackScholes.cu'
+    Offset:          8681
+    Length:          0
+    ReplacementText: ')'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+MainSourceFilesDigest:
+  - MainSourceFile:  '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes/BlackScholes.cu'
+    Digest:          27168c22483ea463404bd3bcc054c2db
+DpctVersion:     18.0.0
+MainHelperFileName: ''
+USMLevel:        ''
+FeatureMap:      {}
+CompileTargets:  {}
+OptionMap:
+  AnalysisScopePath:
+    Value:           '/home/tcs2/workspace_shwetha/2024/new/cuda-samples'
+    Specified:       false
+  AsyncHandler:
+    Value:           'false'
+    Specified:       false
+  BuildScript:
+    Value:           '0'
+    Specified:       false
+  CodePinEnabled:
+    Value:           'false'
+    Specified:       false
+  CommentsEnabled:
+    Value:           'false'
+    Specified:       false
+  CompilationsDir:
+    Value:           '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/BlackScholes'
+    Specified:       true
+  CtadEnabled:
+    Value:           'false'
+    Specified:       false
+  EnablepProfiling:
+    Value:           'false'
+    Specified:       false
+  ExperimentalFlag:
+    Value:           '8'
+    Specified:       true
+  ExplicitNamespace:
+    Value:           '20'
+    Specified:       false
+  ExtensionDDFlag:
+    Value:           '0'
+    Specified:       false
+  ExtensionDEFlag:
+    Value:           '4294967295'
+    Specified:       false
+  HelperFuncPreferenceFlag:
+    Value:           '0'
+    Specified:       false
+  NDRangeDim:
+    Value:           '3'
+    Specified:       false
+  NoDRYPattern:
+    Value:           'false'
+    Specified:       false
+  OptimizeMigration:
+    Value:           'false'
+    Specified:       false
+  ProcessAll:
+    Value:           'false'
+    Specified:       false
+  RuleFile:
+    Value:           ''
+    Specified:       false
+  SyclNamedLambda:
+    Value:           'false'
+    Specified:       false
+  UsmLevel:
+    Value:           '1'
+    Specified:       false
+...

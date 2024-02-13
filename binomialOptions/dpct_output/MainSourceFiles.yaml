@@ -1,0 +1,417 @@
+---
+MainSourceFile:  '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/MainSrcFiles_placehold'
+Replacements:
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions.cpp'
+    Offset:          1723
+    Length:          0
+    ReplacementText: "#include <sycl/sycl.hpp>\n#include <dpct/dpct.hpp>\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions.cpp'
+    Offset:          1800
+    Length:          26
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions.cpp'
+    Offset:          4330
+    Length:          23
+    ReplacementText: 'DPCT_CHECK_ERROR(dpct::get_current_device().queues_wait_and_throw())'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions.cpp'
+    Offset:          4483
+    Length:          23
+    ReplacementText: 'DPCT_CHECK_ERROR(dpct::get_current_device().queues_wait_and_throw())'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions_kernel.cu'
+    Offset:          1756
+    Length:          0
+    ReplacementText: "#include <sycl/sycl.hpp>\n#include <dpct/dpct.hpp>\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions_kernel.cu'
+    Offset:          1795
+    Length:          32
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions_kernel.cu'
+    Offset:          1828
+    Length:          34
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions_kernel.cu'
+    Offset:          1946
+    Length:          0
+    ReplacementText: "\n#include <cmath>\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions_kernel.cu'
+    Offset:          1996
+    Length:          0
+    ReplacementText: ' dpct_type_100429'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions_kernel.cu'
+    Offset:          2078
+    Length:          60
+    ReplacementText: 'static dpct::constant_memory<__TOptionData, 1> d_OptionData(MAX_OPTIONS);'
+    ConstantFlag:    DeviceConstant
+    ConstantOffset:  2085
+    InitStr:         d_OptionData
+    NewHostVarName:  d_OptionData_host_ct1
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions_kernel.cu'
+    Offset:          2139
+    Length:          48
+    ReplacementText: 'static dpct::global_memory<real, 1> d_CallValue(MAX_OPTIONS);'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions_kernel.cu'
+    Offset:          2439
+    Length:          11
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions_kernel.cu'
+    Offset:          2533
+    Length:          36
+    ReplacementText: 'sycl::native::exp(vDt * (2.0f * i - NUM_STEPS))'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions_kernel.cu'
+    Offset:          3156
+    Length:          11
+    ReplacementText: "/*\nDPCT1110:0: The total declared local variable size in device function binomialOptionsKernel exceeds 128 bytes and may cause high register pressure. Consult with your hardware vendor to find the total register size available and adjust the code, or use smaller sub-group size to avoid high register pressure.\n*/\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions_kernel.cu'
+    Offset:          3194
+    Length:          0
+    ReplacementText: "const sycl::nd_item<3> &item_ct1,\n                           __TOptionData const *d_OptionData, real *d_CallValue,\n                           real *call_exchange"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions_kernel.cu'
+    Offset:          3234
+    Length:          16
+    ReplacementText: 'sycl::group<3>'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions_kernel.cu'
+    Offset:          3257
+    Length:          23
+    ReplacementText: 'item_ct1.get_group()'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions_kernel.cu'
+    Offset:          3284
+    Length:          52
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions_kernel.cu'
+    Offset:          3356
+    Length:          11
+    ReplacementText: 'item_ct1.get_local_id(2)'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions_kernel.cu'
+    Offset:          3399
+    Length:          10
+    ReplacementText: 'item_ct1.get_group(2)'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions_kernel.cu'
+    Offset:          3444
+    Length:          10
+    ReplacementText: 'item_ct1.get_group(2)'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions_kernel.cu'
+    Offset:          3491
+    Length:          10
+    ReplacementText: 'item_ct1.get_group(2)'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions_kernel.cu'
+    Offset:          3543
+    Length:          10
+    ReplacementText: 'item_ct1.get_group(2)'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions_kernel.cu'
+    Offset:          3598
+    Length:          10
+    ReplacementText: 'item_ct1.get_group(2)'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions_kernel.cu'
+    Offset:          3896
+    Length:          34
+    ReplacementText: 'sycl::max(0, tid * ELEMS_PER_THREAD - 1)'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions_kernel.cu'
+    Offset:          4025
+    Length:          0
+    ReplacementText: "    /*\n    DPCT1065:1: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance if there is no access to global memory.\n    */\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions_kernel.cu'
+    Offset:          4029
+    Length:          13
+    ReplacementText: 'item_ct1.barrier()'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions_kernel.cu'
+    Offset:          4097
+    Length:          0
+    ReplacementText: "    /*\n    DPCT1065:2: Consider replacing sycl::nd_item::barrier() with sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better performance if there is no access to global memory.\n    */\n"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions_kernel.cu'
+    Offset:          4101
+    Length:          13
+    ReplacementText: 'item_ct1.barrier()'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions_kernel.cu'
+    Offset:          4309
+    Length:          10
+    ReplacementText: 'item_ct1.get_group(2)'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions_kernel.cu'
+    Offset:          5580
+    Length:          18
+    ReplacementText: 'DPCT_CHECK_ERROR(dpct::get_in_order_queue().memcpy'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions_kernel.cu'
+    Offset:          5599
+    Length:          12
+    ReplacementText: 'd_OptionData.get_ptr()'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions_kernel.cu'
+    Offset:          5693
+    Length:          0
+    ReplacementText: '.wait())'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions_kernel.cu'
+    Offset:          5698
+    Length:          51
+    ReplacementText: "{\n    d_OptionData.init();\n    d_CallValue.init();\n\n    dpct::get_in_order_queue().submit(\n      [&](sycl::handler &cgh) {\n        auto d_OptionData_ptr_ct1 = d_OptionData.get_ptr();\n        auto d_CallValue_ptr_ct1 = d_CallValue.get_ptr();\n\n        /*\n        DPCT1101:17: 'THREADBLOCK_SIZE + 1' expression was replaced with a value. Modify the code to use the original expression, provided in comments, if it is correct.\n        */\n        sycl::local_accessor<real, 1> call_exchange_acc_ct1(sycl::range<1>(129/*THREADBLOCK_SIZE + 1*/), cgh);\n\n        cgh.parallel_for(\n          sycl::nd_range<3>(sycl::range<3>(1, 1, optN) * sycl::range<3>(1, 1, THREADBLOCK_SIZE), sycl::range<3>(1, 1, THREADBLOCK_SIZE)), \n          [=](sycl::nd_item<3> item_ct1) {\n            binomialOptionsKernel(item_ct1, d_OptionData_ptr_ct1, d_CallValue_ptr_ct1, call_exchange_acc_ct1.get_multi_ptr<sycl::access::decorated::no>().get());\n          });\n      });\n  }"
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: true
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions_kernel.cu'
+    Offset:          5749
+    Length:          1
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions_kernel.cu'
+    Offset:          5843
+    Length:          20
+    ReplacementText: 'DPCT_CHECK_ERROR(dpct::get_in_order_queue().memcpy'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions_kernel.cu'
+    Offset:          5875
+    Length:          11
+    ReplacementText: 'd_CallValue.get_ptr()'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+  - FilePath:        '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions_kernel.cu'
+    Offset:          5908
+    Length:          0
+    ReplacementText: '.wait())'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+    BlockLevelFormatFlag: false
+MainSourceFilesDigest:
+  - MainSourceFile:  '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions.cpp'
+    Digest:          23cf91f6677d355f81515c3cbcafbcd3
+  - MainSourceFile:  '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions/binomialOptions_kernel.cu'
+    Digest:          f1b9444129e17c6529a0bd50f3070174
+DpctVersion:     18.0.0
+MainHelperFileName: ''
+USMLevel:        ''
+FeatureMap:      {}
+CompileTargets:  {}
+OptionMap:
+  AnalysisScopePath:
+    Value:           '/home/tcs2/workspace_shwetha/2024/new/cuda-samples'
+    Specified:       false
+  AsyncHandler:
+    Value:           'false'
+    Specified:       false
+  BuildScript:
+    Value:           '0'
+    Specified:       false
+  CodePinEnabled:
+    Value:           'false'
+    Specified:       false
+  CommentsEnabled:
+    Value:           'false'
+    Specified:       false
+  CompilationsDir:
+    Value:           '/home/tcs2/workspace_shwetha/2024/new/cuda-samples/Samples/5_Domain_Specific/binomialOptions'
+    Specified:       true
+  CtadEnabled:
+    Value:           'false'
+    Specified:       false
+  EnablepProfiling:
+    Value:           'false'
+    Specified:       false
+  ExperimentalFlag:
+    Value:           '8'
+    Specified:       true
+  ExplicitNamespace:
+    Value:           '20'
+    Specified:       false
+  ExtensionDDFlag:
+    Value:           '0'
+    Specified:       false
+  ExtensionDEFlag:
+    Value:           '4294967295'
+    Specified:       false
+  HelperFuncPreferenceFlag:
+    Value:           '0'
+    Specified:       false
+  NDRangeDim:
+    Value:           '3'
+    Specified:       false
+  NoDRYPattern:
+    Value:           'false'
+    Specified:       false
+  OptimizeMigration:
+    Value:           'false'
+    Specified:       false
+  ProcessAll:
+    Value:           'false'
+    Specified:       false
+  RuleFile:
+    Value:           ''
+    Specified:       false
+  SyclNamedLambda:
+    Value:           'false'
+    Specified:       false
+  UsmLevel:
+    Value:           '1'
+    Specified:       false
+...
