@@ -1,3 +1,9 @@
+//=========================================================
+// Modifications Copyright © 2022 Intel Corporation
+//
+// SPDX-License-Identifier: BSD-3-Clause
+//=========================================================
+
 /* Copyright (c) 2022, NVIDIA CORPORATION. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -100,11 +106,7 @@ void initValue(float *od, float value, const sycl::nd_item<3> &item_ct1) {
   od[index] = value;
 
   // sync after each decomposition step
-  /*
-  DPCT1065:0: Consider replacing sycl::nd_item::barrier() with
-  sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better
-  performance if there is no access to global memory.
-  */
+ 
   item_ct1.barrier();
 }
 
@@ -147,11 +149,7 @@ void dwtHaar1D(float *id, float *od, float *approx_final,
   // read data from global memory
   shared[tid] = id[idata];
   shared[tid + bdim] = id[idata + bdim];
-  /*
-  DPCT1065:1: Consider replacing sycl::nd_item::barrier() with
-  sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better
-  performance if there is no access to global memory.
-  */
+ 
   item_ct1.barrier();
 
   // this operation has a two way bank conflicts for all threads, this are two
@@ -159,11 +157,7 @@ void dwtHaar1D(float *id, float *od, float *approx_final,
   // conflict are more expensive than the one cycle introduced by serialization
   float data0 = shared[2 * tid];
   float data1 = shared[(2 * tid) + 1];
-  /*
-  DPCT1065:2: Consider replacing sycl::nd_item::barrier() with
-  sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better
-  performance if there is no access to global memory.
-  */
+
   item_ct1.barrier();
 
   // detail coefficient, not further referenced so directly store in
@@ -180,11 +174,7 @@ void dwtHaar1D(float *id, float *od, float *approx_final,
 
   // all threads have to write approximation coefficient to shared memory before
   // next steps can take place
-  /*
-  DPCT1065:3: Consider replacing sycl::nd_item::barrier() with
-  sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better
-  performance if there is no access to global memory.
-  */
+  
   item_ct1.barrier();
 
   // early out if possible
@@ -250,11 +240,7 @@ void dwtHaar1D(float *id, float *od, float *approx_final,
       }
 
       // sync after each decomposition step
-      /*
-      DPCT1065:4: Consider replacing sycl::nd_item::barrier() with
-      sycl::nd_item::barrier(sycl::access::fence_space::local_space) for better
-      performance if there is no access to global memory.
-      */
+
       item_ct1.barrier();
     }
 

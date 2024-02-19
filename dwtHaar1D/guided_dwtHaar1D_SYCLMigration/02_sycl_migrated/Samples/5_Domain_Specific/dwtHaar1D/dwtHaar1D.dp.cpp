@@ -1,3 +1,9 @@
+//=========================================================
+// Modifications Copyright © 2022 Intel Corporation
+//
+// SPDX-License-Identifier: BSD-3-Clause
+//=========================================================
+
 /* Copyright (c) 2022, NVIDIA CORPORATION. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -143,10 +149,9 @@ void runTest(int argc, char **argv) {
 
   printf("%s Starting...\n\n", argv[0]);
 
-  // use command-line specified CUDA device, otherwise use device with highest
-  // Gflops/s
-  findCudaDevice(argc, (const char **)argv);
-
+  sycl::queue q{sycl::default_selector_v, sycl::property::queue::in_order()};
+  std::cout << "\nRunning on " << q.get_device().get_info<sycl::info::device::name>()
+            << "\n";
   // file names, either specified as cmd line args or use default
   if (argc == 4) {
     char *tmp_sfname, *tmp_rfname, *tmp_goldfname;
@@ -216,15 +221,15 @@ void runTest(int argc, char **argv) {
 
   // allocate device mem
   const unsigned int smem_size = sizeof(float) * slength;
-  checkCudaErrors(DPCT_CHECK_ERROR(d_idata = (float *)sycl::malloc_device(
-                                       smem_size, dpct::get_in_order_queue())));
-  checkCudaErrors(DPCT_CHECK_ERROR(d_odata = (float *)sycl::malloc_device(
-                                       smem_size, dpct::get_in_order_queue())));
-  checkCudaErrors(DPCT_CHECK_ERROR(approx_final = (float *)sycl::malloc_device(
-                                       smem_size, dpct::get_in_order_queue())));
+  DPCT_CHECK_ERROR(d_idata = (float *)sycl::malloc_device(
+                                       smem_size, q));
+  DPCT_CHECK_ERROR(d_odata = (float *)sycl::malloc_device(
+                                       smem_size, q));
+  DPCT_CHECK_ERROR(approx_final = (float *)sycl::malloc_device(
+                                       smem_size, q));
   // copy input data to device
-  checkCudaErrors(DPCT_CHECK_ERROR(
-      dpct::get_in_order_queue().memcpy(d_idata, signal, smem_size).wait()));
+  DPCT_CHECK_ERROR(
+      q.memcpy(d_idata, signal, smem_size).wait());
 
   // total number of threads
   // in the first decomposition step always one thread computes the average and
@@ -260,12 +265,8 @@ void runTest(int argc, char **argv) {
   }
 
   // Initialize d_odata to 0.0f
-  /*
-  DPCT1049:5: The work-group size passed to the SYCL kernel may exceed the
-  limit. To get the device limit, query info::device::max_work_group_size.
-  Adjust the work-group size if needed.
-  */
-  dpct::get_in_order_queue().parallel_for(
+ 
+  q.parallel_for(
       sycl::nd_range<3>(grid_size * block_size, block_size),
       [=](sycl::nd_item<3> item_ct1) {
         initValue(d_odata, 0.0f, item_ct1);
@@ -274,22 +275,14 @@ void runTest(int argc, char **argv) {
   // do until full decomposition is accomplished
   while (0 != num_threads_total_left) {
     // double the number of threads as bytes
-    /*
-    DPCT1083:7: The size of local memory in the migrated code may be different
-    from the original code. Check that the allocated memory size in the migrated
-    code is correct.
-    */
+
     unsigned int mem_shared = (2 * block_size[2]) * sizeof(float);
     // extra memory requirements to avoid bank conflicts
     mem_shared += ((2 * block_size[2]) / NUM_BANKS) * sizeof(float);
 
     // run kernel
-    /*
-    DPCT1049:6: The work-group size passed to the SYCL kernel may exceed the
-    limit. To get the device limit, query info::device::max_work_group_size.
-    Adjust the work-group size if needed.
-    */
-    dpct::get_in_order_queue().submit([&](sycl::handler &cgh) {
+ 
+    q.submit([&](sycl::handler &cgh) {
       sycl::local_accessor<uint8_t, 1> dpct_local_acc_ct1(
           sycl::range<1>(mem_shared), cgh);
 
@@ -306,11 +299,11 @@ void runTest(int argc, char **argv) {
 
     // Copy approx_final to appropriate location
     if (approx_is_input) {
-      checkCudaErrors(DPCT_CHECK_ERROR(dpct::get_in_order_queue().memcpy(
-          d_idata, approx_final, grid_size[2] * 4)));
+      DPCT_CHECK_ERROR(q.memcpy(
+          d_idata, approx_final, grid_size[2] * 4));
     } else {
-      checkCudaErrors(DPCT_CHECK_ERROR(dpct::get_in_order_queue().memcpy(
-          d_odata, approx_final, grid_size[2] * 4)));
+      DPCT_CHECK_ERROR(q.memcpy(
+          d_odata, approx_final, grid_size[2] * 4));
     }
 
     // update level variables
@@ -341,8 +334,8 @@ void runTest(int argc, char **argv) {
   // get the result back from the server
   // allocate mem for the result
   float *odata = (float *)malloc(smem_size);
-  checkCudaErrors(DPCT_CHECK_ERROR(
-      dpct::get_in_order_queue().memcpy(odata, d_odata, smem_size).wait()));
+  DPCT_CHECK_ERROR(
+      q.memcpy(odata, d_odata, smem_size).wait());
 
   // post processing
   // write file for regression test
@@ -386,12 +379,9 @@ void runTest(int argc, char **argv) {
   free(reference);
 
   // free allocated host and device memory
-  checkCudaErrors(
-      DPCT_CHECK_ERROR(dpct::dpct_free(d_odata, dpct::get_in_order_queue())));
-  checkCudaErrors(
-      DPCT_CHECK_ERROR(dpct::dpct_free(d_idata, dpct::get_in_order_queue())));
-  checkCudaErrors(DPCT_CHECK_ERROR(
-      dpct::dpct_free(approx_final, dpct::get_in_order_queue())));
+  DPCT_CHECK_ERROR(dpct::dpct_free(d_odata, q));
+  DPCT_CHECK_ERROR(dpct::dpct_free(d_idata, q));
+  DPCT_CHECK_ERROR(dpct::dpct_free(approx_final, q));
 
   free(signal);
   free(odata);
