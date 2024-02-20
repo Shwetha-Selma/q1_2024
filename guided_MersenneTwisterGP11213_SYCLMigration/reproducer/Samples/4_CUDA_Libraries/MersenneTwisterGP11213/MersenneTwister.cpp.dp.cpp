@@ -33,11 +33,11 @@
 // Utilities and system includes
 // includes, system
 #include <sycl/sycl.hpp>
-#include <dpct/dpct.hpp>
+#include "dpct.hpp"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <dpct/rng_utils.hpp>
+#include "rng_utils.hpp"
 
 // Utilities and system includes
 #include <helper_functions.h>
@@ -58,7 +58,10 @@ int main(int argc, char **argv) {
 
   // initialize the GPU, either identified by --device
   // or by picking the device with highest flop rate.
-  int devID = findCudaDevice(argc, (const char **)argv);
+//   int devID = findCudaDevice(argc, (const char **)argv);
+//     auto& D = dpct::get_device(devID);
+//   std::cout << "Device name: " << D.get_info<sycl::info::device::name>() << std::endl;
+//   std::cout << "Device backend_version: " << D.get_info<sycl::info::device::backend_version>() << std::endl;
 
   // parsing the number of random numbers to generate
   int rand_n = DEFAULT_RAND_N;
@@ -96,8 +99,10 @@ int main(int argc, char **argv) {
   checkCudaErrors(DPCT_CHECK_ERROR(prngGPU->set_seed(seed)));
 
   dpct::rng::host_rng_ptr prngCPU;
-  checkCudaErrors(DPCT_CHECK_ERROR(prngCPU = dpct::rng::create_host_rng(
-                                       dpct::rng::random_engine_type::mt2203)));
+  // checkCudaErrors(DPCT_CHECK_ERROR(prngCPU = dpct::rng::create_host_rng(
+  //                                      dpct::rng::random_engine_type::mt2203)));
+  prngCPU = dpct::rng::create_host_rng<true>(
+                                       dpct::rng::random_engine_type::mt2203);
   checkCudaErrors(DPCT_CHECK_ERROR(prngCPU->set_seed(seed)));
 
   //
@@ -114,8 +119,9 @@ int main(int argc, char **argv) {
   checkCudaErrors(DPCT_CHECK_ERROR(
       stream->memcpy(h_RandGPU, d_Rand, rand_n * sizeof(float))));
 
-  float *h_RandCPU = (float *)malloc(rand_n * sizeof(float));
-
+  float *h_RandCPU;
+  checkCudaErrors(DPCT_CHECK_ERROR(h_RandCPU = sycl::malloc_host<float>(
+                                       rand_n, dpct::get_in_order_queue())));
   printf("Generating random numbers on CPU...\n\n");
   checkCudaErrors(
       DPCT_CHECK_ERROR(prngCPU->generate_uniform((float *)h_RandCPU, rand_n)));
@@ -156,11 +162,13 @@ int main(int argc, char **argv) {
   checkCudaErrors(
       DPCT_CHECK_ERROR(dpct::get_current_device().destroy_queue(stream)));
   checkCudaErrors(
-      DPCT_CHECK_ERROR(dpct::dpct_free(d_Rand, dpct::get_in_order_queue())));
+      DPCT_CHECK_ERROR(sycl::free(d_Rand, dpct::get_in_order_queue())));
   sdkDeleteTimer(&hTimer);
   checkCudaErrors(
       DPCT_CHECK_ERROR(sycl::free(h_RandGPU, dpct::get_in_order_queue())));
-  free(h_RandCPU);
+   checkCudaErrors(
+      DPCT_CHECK_ERROR(sycl::free(h_RandCPU, dpct::get_in_order_queue())));
+  // free(h_RandCPU);
 
   exit(L1norm < 1e-6 ? EXIT_SUCCESS : EXIT_FAILURE);
 }

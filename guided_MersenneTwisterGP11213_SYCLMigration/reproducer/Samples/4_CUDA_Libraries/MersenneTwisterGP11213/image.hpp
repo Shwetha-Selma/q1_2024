@@ -355,8 +355,7 @@ public:
   inline int get_dims() { return _dims; }
   /// Convert to pitched data.
   pitched_data to_pitched_data() {
-    return pitched_data(_host_data, _range[0] * _channel.get_total_size(),
-                        _range[0], _range[1]);
+    return pitched_data(_host_data, _range[0], _range[0], _range[1]);
   }
 
   ~image_matrix() {
@@ -386,12 +385,6 @@ public:
     _data = matrix_data;
     _channel = matrix_data->get_channel();
   }
-#ifdef SYCL_EXT_ONEAPI_BINDLESS_IMAGES
-  void set_data(sycl::ext::oneapi::experimental::image_mem *image_mem) {
-    _type = image_data_type::matrix;
-    _data = image_mem;
-  }
-#endif
   void set_data(void *data_ptr, size_t x_size, image_channel channel) {
     _type = image_data_type::linear;
     _data = data_ptr;

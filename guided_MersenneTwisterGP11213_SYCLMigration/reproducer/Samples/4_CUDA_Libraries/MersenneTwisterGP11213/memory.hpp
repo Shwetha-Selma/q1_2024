@@ -832,9 +832,6 @@ static inline void *dpct_malloc(size_t &pitch, size_t x, size_t y,
 /// \returns no return value.
 static inline void dpct_free(void *ptr,
                              sycl::queue &q = get_default_queue()) {
-#ifndef DPCT_USM_LEVEL_NONE
-  dpct::get_current_device().queues_wait_and_throw();
-#endif
   detail::dpct_free(ptr, q);
 }
 
@@ -1456,10 +1453,6 @@ public:
           "dpct::pointer_attributes: only works for USM pointer.");
 #else
     memory_type = sycl::get_pointer_type(ptr, q.get_context());
-    if (memory_type == sycl::usm::alloc::unknown) {
-      device_id = -1;
-      return;
-    }
     device_pointer = (memory_type !=
                         sycl::usm::alloc::unknown) ? ptr : nullptr;
     host_pointer = (memory_type !=
@@ -1494,7 +1487,7 @@ private:
   sycl::usm::alloc memory_type = sycl::usm::alloc::unknown;
   const void *device_pointer = nullptr;
   const void *host_pointer = nullptr;
-  unsigned int device_id = -1;
+  unsigned int device_id = 0;
 };
 } // namespace dpct
 #endif // __DPCT_MEMORY_HPP__

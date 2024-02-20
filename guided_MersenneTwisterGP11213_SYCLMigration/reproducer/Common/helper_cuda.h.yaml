@@ -643,7 +643,7 @@ Replacements:
   - FilePath:        '/home/tcs2/workspace_shwetha/2024/cuda-samples/Common/helper_cuda.h'
     Offset:          27117
     Length:          19
-    ReplacementText: 'DPCT_CHECK_ERROR(dev = dpct::dev_mgr::instance().current_device_id())'
+    ReplacementText: 'dev = dpct::dev_mgr::instance().current_device_id()'
     ConstantFlag:    ''
     ConstantOffset:  0
     InitStr:         ''
@@ -682,9 +682,6 @@ OptionMap:
   AsyncHandler:
     Value:           'false'
     Specified:       false
-  CodePinEnabled:
-    Value:           'false'
-    Specified:       false
   CommentsEnabled:
     Value:           'false'
     Specified:       false
@@ -698,7 +695,10 @@ OptionMap:
     Value:           'false'
     Specified:       false
   ExperimentalFlag:
-    Value:           '0'
+    Value:           '8'
+    Specified:       true
+  ExplicitClNamespace:
+    Value:           'false'
     Specified:       false
   ExplicitNamespace:
     Value:           '20'
