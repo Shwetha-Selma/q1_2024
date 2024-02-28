@@ -94,11 +94,13 @@ int main(int argc, char **argv) {
                                        dpct::rng::random_engine_type::mt2203)));
   checkCudaErrors(DPCT_CHECK_ERROR(prngGPU->set_queue(stream)));
   checkCudaErrors(DPCT_CHECK_ERROR(prngGPU->set_seed(seed)));
+    DPCT_CHECK_ERROR(prngGPU->set_engine_idx(1));
 
   dpct::rng::host_rng_ptr prngCPU;
   checkCudaErrors(DPCT_CHECK_ERROR(prngCPU = dpct::rng::create_host_rng(
                                        dpct::rng::random_engine_type::mt2203)));
   checkCudaErrors(DPCT_CHECK_ERROR(prngCPU->set_seed(seed)));
+    DPCT_CHECK_ERROR(prngGPU->set_engine_idx(1));
 
   //
   // Example 1: Compare random numbers generated on GPU and CPU

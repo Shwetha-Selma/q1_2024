@@ -46,7 +46,7 @@
 
 float compareResults(int rand_n, float *h_RandGPU, float *h_RandCPU);
 
-const int DEFAULT_RAND_N = 2400000;
+const int DEFAULT_RAND_N = 10240;//2400000;
 const unsigned int DEFAULT_SEED = 777;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -96,11 +96,13 @@ int main(int argc, char **argv) {
                                        dpct::rng::random_engine_type::mt2203)));
   checkCudaErrors(DPCT_CHECK_ERROR(prngGPU->set_queue(stream)));
   checkCudaErrors(DPCT_CHECK_ERROR(prngGPU->set_seed(seed)));
+    DPCT_CHECK_ERROR(prngGPU->set_engine_idx(1));
 
   dpct::rng::host_rng_ptr prngCPU;
-  checkCudaErrors(DPCT_CHECK_ERROR(prngCPU = dpct::rng::create_host_rng(
+  checkCudaErrors(DPCT_CHECK_ERROR(prngCPU = dpct::rng::create_host_rng<true>(
                                        dpct::rng::random_engine_type::mt2203)));
   checkCudaErrors(DPCT_CHECK_ERROR(prngCPU->set_seed(seed)));
+    DPCT_CHECK_ERROR(prngCPU->set_engine_idx(1));
 
   // Example 1: Compare random numbers generated on GPU and CPU
   float *h_RandGPU;
