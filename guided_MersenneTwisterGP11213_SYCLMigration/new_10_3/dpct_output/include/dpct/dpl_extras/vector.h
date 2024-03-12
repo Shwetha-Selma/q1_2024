@@ -138,7 +138,9 @@ public:
             oneapi::dpl::execution::make_device_policy(get_default_queue()),
             first, last, begin());
       } else {
-        sycl::buffer<T, 1> buf(first, last);
+        sycl::buffer<typename ::std::iterator_traits<InputIterator>::value_type,
+                     1>
+            buf(first, last);
         auto buf_first = oneapi::dpl::begin(buf);
         auto buf_last = oneapi::dpl::end(buf);
         ::std::copy(
@@ -172,7 +174,7 @@ public:
         _capacity(v.capacity()) {}
 
   template <typename OtherAllocator>
-  device_vector(::std::vector<T, OtherAllocator> &v)
+  device_vector(const ::std::vector<T, OtherAllocator> &v)
       : _alloc(get_default_queue()), _size(v.size()) {
     _set_capacity_and_alloc();
     if (_size > 0) {
@@ -560,14 +562,14 @@ public:
   T *real_begin() {
     return (detail::mem_mgr::instance()
                 .translate_ptr(_storage)
-                .buffer.template get_access<sycl::access_mode::read_write>())
+                .buffer.get_host_access())
         .get_pointer();
   }
   const T *real_begin() const {
     return const_cast<device_vector *>(this)
         ->detail::mem_mgr::instance()
         .translate_ptr(_storage)
-        .buffer.template get_access<sycl::access_mode::read_write>()
+        .buffer.get_host_access()
         .get_pointer();
   }
   void swap(device_vector &v) {

@@ -31,7 +31,7 @@ Replacements:
   - FilePath:        '/home/tcs2/workspace_shwetha/2024/q1/cuda-samples/Common/helper_cuda.h'
     Offset:          2287
     Length:          0
-    ReplacementText: "  /*\n  DPCT1009:0: SYCL uses exceptions to report errors and does not use the error codes. The original code was commented out and a warning string was inserted. You need to rewrite this code.\n  */\n"
+    ReplacementText: "  /*\n  DPCT1009:0: SYCL uses exceptions to report errors and does not use the error codes. The call was replaced by a placeholder string. You need to rewrite this code.\n  */\n"
     ConstantFlag:    ''
     ConstantOffset:  0
     InitStr:         ''
@@ -40,7 +40,7 @@ Replacements:
   - FilePath:        '/home/tcs2/workspace_shwetha/2024/q1/cuda-samples/Common/helper_cuda.h'
     Offset:          2296
     Length:          23
-    ReplacementText: '"cudaGetErrorName is not supported"/*cudaGetErrorName(error)*/'
+    ReplacementText: '"<Placeholder string>"'
     ConstantFlag:    ''
     ConstantOffset:  0
     InitStr:         ''
@@ -643,7 +643,7 @@ Replacements:
   - FilePath:        '/home/tcs2/workspace_shwetha/2024/q1/cuda-samples/Common/helper_cuda.h'
     Offset:          27117
     Length:          19
-    ReplacementText: 'dev = dpct::dev_mgr::instance().current_device_id()'
+    ReplacementText: 'DPCT_CHECK_ERROR(dev = dpct::dev_mgr::instance().current_device_id())'
     ConstantFlag:    ''
     ConstantOffset:  0
     InitStr:         ''
@@ -670,7 +670,7 @@ Replacements:
 MainSourceFilesDigest:
   - MainSourceFile:  '/home/tcs2/workspace_shwetha/2024/q1/cuda-samples/Common/helper_cuda.h'
     Digest:          b335aa967b6d80921de9d6528e1564a5
-DpctVersion:     2024.0.0
+DpctVersion:     19.0.0
 MainHelperFileName: ''
 USMLevel:        ''
 FeatureMap:      {}
@@ -680,6 +680,12 @@ OptionMap:
     Value:           '/home/tcs2/workspace_shwetha/2024/q1/cuda-samples'
     Specified:       false
   AsyncHandler:
+    Value:           'false'
+    Specified:       false
+  BuildScript:
+    Value:           '0'
+    Specified:       false
+  CodePinEnabled:
     Value:           'false'
     Specified:       false
   CommentsEnabled:
@@ -696,9 +702,6 @@ OptionMap:
     Specified:       false
   ExperimentalFlag:
     Value:           '0'
-    Specified:       false
-  ExplicitClNamespace:
-    Value:           'false'
     Specified:       false
   ExplicitNamespace:
     Value:           '20'
@@ -718,9 +721,6 @@ OptionMap:
   NoDRYPattern:
     Value:           'false'
     Specified:       false
-  NoUseGenericSpace:
-    Value:           ''
-    Specified:       true
   OptimizeMigration:
     Value:           'false'
     Specified:       false

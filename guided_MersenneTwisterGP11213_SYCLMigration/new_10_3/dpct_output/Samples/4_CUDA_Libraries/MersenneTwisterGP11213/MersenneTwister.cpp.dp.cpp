@@ -97,7 +97,8 @@ int main(int argc, char **argv) {
 
   dpct::rng::host_rng_ptr prngCPU;
   checkCudaErrors(DPCT_CHECK_ERROR(prngCPU = dpct::rng::create_host_rng(
-                                       dpct::rng::random_engine_type::mt2203)));
+                                       dpct::rng::random_engine_type::mt2203,
+                                       dpct::cpu_device().default_queue())));
   checkCudaErrors(DPCT_CHECK_ERROR(prngCPU->set_seed(seed)));
 
   //
@@ -156,7 +157,7 @@ int main(int argc, char **argv) {
   checkCudaErrors(
       DPCT_CHECK_ERROR(dpct::get_current_device().destroy_queue(stream)));
   checkCudaErrors(
-      DPCT_CHECK_ERROR(sycl::free(d_Rand, dpct::get_in_order_queue())));
+      DPCT_CHECK_ERROR(dpct::dpct_free(d_Rand, dpct::get_in_order_queue())));
   sdkDeleteTimer(&hTimer);
   checkCudaErrors(
       DPCT_CHECK_ERROR(sycl::free(h_RandGPU, dpct::get_in_order_queue())));

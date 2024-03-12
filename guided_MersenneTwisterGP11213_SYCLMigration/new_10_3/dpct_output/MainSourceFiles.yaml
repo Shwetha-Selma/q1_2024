@@ -1,5 +1,5 @@
 ---
-MainSourceFile:  MainSrcFiles_placehold
+MainSourceFile:  '/home/tcs2/workspace_shwetha/2024/q1/cuda-samples/Samples/4_CUDA_Libraries/MersenneTwisterGP11213/MainSrcFiles_placehold'
 Replacements:
   - FilePath:        '/home/tcs2/workspace_shwetha/2024/q1/cuda-samples/Samples/4_CUDA_Libraries/MersenneTwisterGP11213/MersenneTwister.cpp'
     Offset:          1716
@@ -166,7 +166,7 @@ Replacements:
   - FilePath:        '/home/tcs2/workspace_shwetha/2024/q1/cuda-samples/Samples/4_CUDA_Libraries/MersenneTwisterGP11213/MersenneTwister.cpp'
     Offset:          3503
     Length:          61
-    ReplacementText: 'DPCT_CHECK_ERROR(prngCPU = dpct::rng::create_host_rng(dpct::rng::random_engine_type::mt2203)'
+    ReplacementText: 'DPCT_CHECK_ERROR(prngCPU = dpct::rng::create_host_rng(dpct::rng::random_engine_type::mt2203, dpct::cpu_device().default_queue())'
     ConstantFlag:    ''
     ConstantOffset:  0
     InitStr:         ''
@@ -364,7 +364,7 @@ Replacements:
   - FilePath:        '/home/tcs2/workspace_shwetha/2024/q1/cuda-samples/Samples/4_CUDA_Libraries/MersenneTwisterGP11213/MersenneTwister.cpp'
     Offset:          5347
     Length:          16
-    ReplacementText: 'DPCT_CHECK_ERROR(sycl::free(d_Rand, dpct::get_in_order_queue())'
+    ReplacementText: 'DPCT_CHECK_ERROR(dpct::dpct_free(d_Rand, dpct::get_in_order_queue())'
     ConstantFlag:    ''
     ConstantOffset:  0
     InitStr:         ''
@@ -400,7 +400,7 @@ Replacements:
 MainSourceFilesDigest:
   - MainSourceFile:  '/home/tcs2/workspace_shwetha/2024/q1/cuda-samples/Samples/4_CUDA_Libraries/MersenneTwisterGP11213/MersenneTwister.cpp'
     Digest:          dc21adc28be9321672d00d030607754f
-DpctVersion:     2024.0.0
+DpctVersion:     19.0.0
 MainHelperFileName: ''
 USMLevel:        ''
 FeatureMap:      {}
@@ -410,6 +410,12 @@ OptionMap:
     Value:           '/home/tcs2/workspace_shwetha/2024/q1/cuda-samples'
     Specified:       false
   AsyncHandler:
+    Value:           'false'
+    Specified:       false
+  BuildScript:
+    Value:           '0'
+    Specified:       false
+  CodePinEnabled:
     Value:           'false'
     Specified:       false
   CommentsEnabled:
@@ -426,9 +432,6 @@ OptionMap:
     Specified:       false
   ExperimentalFlag:
     Value:           '0'
-    Specified:       false
-  ExplicitClNamespace:
-    Value:           'false'
     Specified:       false
   ExplicitNamespace:
     Value:           '20'
@@ -448,9 +451,6 @@ OptionMap:
   NoDRYPattern:
     Value:           'false'
     Specified:       false
-  NoUseGenericSpace:
-    Value:           ''
-    Specified:       true
   OptimizeMigration:
     Value:           'false'
     Specified:       false

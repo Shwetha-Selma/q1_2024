@@ -55,10 +55,10 @@
 static const char *_cudaGetErrorEnum(dpct::err0 error) {
   /*
   DPCT1009:0: SYCL uses exceptions to report errors and does not use the error
-  codes. The original code was commented out and a warning string was inserted.
-  You need to rewrite this code.
+  codes. The call was replaced by a placeholder string. You need to rewrite this
+  code.
   */
-  return "cudaGetErrorName is not supported" /*cudaGetErrorName(error)*/;
+  return "<Placeholder string>";
 }
 #endif
 
@@ -997,7 +997,8 @@ inline bool checkCudaCapabilities(int major_version, int minor_version) {
   int dev;
   int major = 0, minor = 0;
 
-  checkCudaErrors(dev = dpct::dev_mgr::instance().current_device_id());
+  checkCudaErrors(
+      DPCT_CHECK_ERROR(dev = dpct::dev_mgr::instance().current_device_id()));
   checkCudaErrors(DPCT_CHECK_ERROR(
       major = dpct::dev_mgr::instance().get_device(dev).get_major_version()));
   checkCudaErrors(DPCT_CHECK_ERROR(

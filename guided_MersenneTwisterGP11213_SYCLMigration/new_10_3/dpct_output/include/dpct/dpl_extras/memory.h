@@ -10,6 +10,7 @@
 #define __DPCT_MEMORY_H__
 
 #include <sycl/sycl.hpp>
+#include <oneapi/dpl/memory>
 #include "functional.h"
 
 // Memory management section:
@@ -78,7 +79,6 @@ template <typename T> struct device_reference {
     return *this;
   };
   pointer operator&() const { return pointer(&value); };
-  operator value_type() const { return T(value); }
   device_reference &operator++() {
     ++value;
     return *this;
@@ -137,6 +137,8 @@ template <typename T> struct device_reference {
     value >>= input;
     return *this;
   };
+  operator T &() { return value; }
+  operator const T &() const { return value; }
   void swap(device_reference &input) {
     T tmp = (*this);
     *this = (input);
@@ -175,6 +177,11 @@ struct is_hetero_iterator<
 } // namespace internal
 
 #ifdef DPCT_USM_LEVEL_NONE
+// Must be forward declared due to default argument
+template <typename T>
+device_pointer<T> device_new(device_pointer<void>, const T &,
+                             const std::size_t = 1);
+
 template <typename T, sycl::access_mode Mode, typename Allocator>
 class device_iterator;
 
@@ -183,6 +190,11 @@ class device_pointer_base {
 protected:
   sycl::buffer<ValueType, 1, Allocator> buffer;
   std::size_t idx;
+
+  // Declare friend to give access to protected buffer and idx members
+  template <typename T>
+  friend device_pointer<T> device_new(device_pointer<void>, const T &,
+                                      const std::size_t);
 
 public:
   using pointer = ValueType *;
@@ -210,20 +222,17 @@ public:
       : buffer(in.buffer), idx(in.idx) {}
   pointer get() const {
     auto res =
-        (const_cast<device_pointer_base *>(this)
-             ->buffer.template get_access<sycl::access_mode::read_write>())
+        (const_cast<device_pointer_base *>(this)->buffer.get_host_access())
             .get_pointer();
     return res + idx;
   }
   operator ValueType *() {
-    auto res = (buffer.template get_access<sycl::access_mode::read_write>())
-                   .get_pointer();
+    auto res = (buffer.get_host_access()).get_pointer();
     return res + idx;
   }
   operator ValueType *() const {
     auto res =
-        (const_cast<device_pointer_base *>(this)
-             ->buffer.template get_access<sycl::access_mode::read_write>())
+        (const_cast<device_pointer_base *>(this)->buffer.get_host_access())
             .get_pointer();
     return res + idx;
   }
@@ -256,52 +265,6 @@ public:
   sycl::buffer<ValueType, 1, Allocator> get_buffer() {
     return buffer;
   } // required
-};
-
-template <typename T, sycl::access_mode Mode, typename Allocator>
-class device_pointer
-    : public device_pointer_base<T, Allocator,
-                                 device_pointer<T, Mode, Allocator>> {
-private:
-  using base_type = device_pointer_base<T, Allocator, device_pointer>;
-
-public:
-  using value_type = T;
-  using difference_type = std::make_signed<std::size_t>::type;
-  using pointer = T *;
-  using reference = T &;
-  using iterator_category = std::random_access_iterator_tag;
-  using is_hetero = std::true_type; // required
-  using is_passed_directly = std::false_type;
-  static constexpr sycl::access_mode mode = Mode; // required
-
-  device_pointer(sycl::buffer<T, 1> in, std::size_t i = 0) : base_type(in, i) {}
-#ifdef __USE_DPCT
-  template <typename OtherT> device_pointer(OtherT *ptr) : base_type(ptr) {}
-#endif
-  // needed for malloc_device, count is number of bytes to allocate
-  device_pointer(const std::size_t count) : base_type(count) {}
-  device_pointer() : base_type() {}
-  device_pointer(const device_pointer &in) : base_type(in) {}
-  device_pointer &operator+=(difference_type forward) {
-    this->idx += forward;
-    return *this;
-  }
-  device_pointer &operator-=(difference_type backward) {
-    this->idx -= backward;
-    return *this;
-  }
-  // include operators from base class
-  using base_type::operator++;
-  using base_type::operator--;
-  device_pointer &operator++() {
-    this->idx += 1;
-    return *this;
-  }
-  device_pointer &operator--() {
-    this->idx -= 1;
-    return *this;
-  }
 };
 
 template <sycl::access_mode Mode, typename Allocator>
@@ -338,6 +301,58 @@ public:
   device_pointer &operator-=(difference_type backward) {
     this->idx -= backward;
     return *this;
+  }
+  // include operators from base class
+  using base_type::operator++;
+  using base_type::operator--;
+  device_pointer &operator++() {
+    this->idx += 1;
+    return *this;
+  }
+  device_pointer &operator--() {
+    this->idx -= 1;
+    return *this;
+  }
+};
+
+template <typename T, sycl::access_mode Mode, typename Allocator>
+class device_pointer
+    : public device_pointer_base<T, Allocator,
+                                 device_pointer<T, Mode, Allocator>> {
+private:
+  using base_type = device_pointer_base<T, Allocator, device_pointer>;
+
+public:
+  using value_type = T;
+  using difference_type = std::make_signed<std::size_t>::type;
+  using pointer = T *;
+  using reference = T &;
+  using iterator_category = std::random_access_iterator_tag;
+  using is_hetero = std::true_type; // required
+  using is_passed_directly = std::false_type;
+  static constexpr sycl::access_mode mode = Mode; // required
+
+  device_pointer(sycl::buffer<T, 1> in, std::size_t i = 0) : base_type(in, i) {}
+#ifdef __USE_DPCT
+  template <typename OtherT> device_pointer(OtherT *ptr) : base_type(ptr) {}
+#endif
+  // needed for malloc_device, count is number of bytes to allocate
+  device_pointer(const std::size_t count) : base_type(count) {}
+  device_pointer() : base_type() {}
+  device_pointer(const device_pointer &in) : base_type(in) {}
+  device_pointer &operator+=(difference_type forward) {
+    this->idx += forward;
+    return *this;
+  }
+  device_pointer &operator-=(difference_type backward) {
+    this->idx -= backward;
+    return *this;
+  }
+  operator device_pointer<void>() {
+    auto converted_buf = (this->buffer)
+                             .template reinterpret<dpct::byte_t>(sycl::range<1>(
+                                 sizeof(value_type) * this->buffer.size()));
+    return device_pointer<void>(converted_buf, this->idx);
   }
   // include operators from base class
   using base_type::operator++;
@@ -395,51 +410,6 @@ public:
   difference_type operator-(const Derived &it) const { return ptr - it.ptr; }
 };
 
-template <typename T>
-class device_pointer : public device_pointer_base<T, device_pointer<T>> {
-private:
-  using base_type = device_pointer_base<T, device_pointer<T>>;
-
-public:
-  using value_type = T;
-  using difference_type = std::make_signed<std::size_t>::type;
-  using pointer = T *;
-  using reference = T &;
-  using const_reference = const T &;
-  using iterator_category = std::random_access_iterator_tag;
-  using is_hetero = std::false_type;         // required
-  using is_passed_directly = std::true_type; // required
-
-  device_pointer(T *p) : base_type(p) {}
-  // needed for malloc_device, count is number of bytes to allocate
-  device_pointer(const std::size_t count) : base_type(count) {}
-  device_pointer() : base_type() {}
-  device_pointer &operator=(const device_iterator<T> &in) {
-    this->ptr = static_cast<device_pointer<T>>(in).ptr;
-    return *this;
-  }
-
-  // include operators from base class
-  using base_type::operator++;
-  using base_type::operator--;
-  device_pointer &operator++() {
-    ++(this->ptr);
-    return *this;
-  }
-  device_pointer &operator--() {
-    --(this->ptr);
-    return *this;
-  }
-  device_pointer &operator+=(difference_type forward) {
-    this->ptr = this->ptr + forward;
-    return *this;
-  }
-  device_pointer &operator-=(difference_type backward) {
-    this->ptr = this->ptr - backward;
-    return *this;
-  }
-};
-
 template <>
 class device_pointer<void>
     : public device_pointer_base<dpct::byte_t, device_pointer<void>> {
@@ -464,6 +434,53 @@ public:
   operator void *() { return this->ptr; }
   operator void *() const { return this->ptr; }
 
+  // include operators from base class
+  using base_type::operator++;
+  using base_type::operator--;
+  device_pointer &operator++() {
+    ++(this->ptr);
+    return *this;
+  }
+  device_pointer &operator--() {
+    --(this->ptr);
+    return *this;
+  }
+  device_pointer &operator+=(difference_type forward) {
+    this->ptr = this->ptr + forward;
+    return *this;
+  }
+  device_pointer &operator-=(difference_type backward) {
+    this->ptr = this->ptr - backward;
+    return *this;
+  }
+};
+
+template <typename T>
+class device_pointer : public device_pointer_base<T, device_pointer<T>> {
+private:
+  using base_type = device_pointer_base<T, device_pointer<T>>;
+
+public:
+  using value_type = T;
+  using difference_type = std::make_signed<std::size_t>::type;
+  using pointer = T *;
+  using reference = T &;
+  using const_reference = const T &;
+  using iterator_category = std::random_access_iterator_tag;
+  using is_hetero = std::false_type;         // required
+  using is_passed_directly = std::true_type; // required
+
+  device_pointer(T *p) : base_type(p) {}
+  // needed for malloc_device, count is number of bytes to allocate
+  device_pointer(const std::size_t count) : base_type(count) {}
+  device_pointer() : base_type() {}
+  device_pointer &operator=(const device_iterator<T> &in) {
+    this->ptr = static_cast<device_pointer<T>>(in).ptr;
+    return *this;
+  }
+  operator device_pointer<void>() {
+    return device_pointer<void>(static_cast<void *>(this->ptr));
+  }
   // include operators from base class
   using base_type::operator++;
   using base_type::operator--;
@@ -682,7 +699,7 @@ struct device_sys_tag : public sys_tag {};
 struct host_sys_tag : public sys_tag {};
 
 #ifdef DPCT_USM_LEVEL_NONE
-template <typename Tag, typename T = void> class tagged_pointer {
+template <typename T, typename Tag> class tagged_pointer {
   static_assert(false,
                 "tagged_pointer is not supported with DPCT_USM_LEVEL_NONE");
 };
@@ -755,7 +772,7 @@ inline constexpr bool is_host_policy_or_tag_v =
 // tagged_pointer provides a wrapper around a raw pointer type with a tag of the
 // location of the allocated memory. Standard pointer operations are supported
 // with this class.
-template <typename Tag, typename T = void> class tagged_pointer {
+template <typename T, typename Tag> class tagged_pointer {
 public:
   using value_type = T;
   using difference_type = ::std::ptrdiff_t;
@@ -818,7 +835,7 @@ private:
 // Void specialization for tagged pointers. Iterator traits are not provided but
 // conversion to other non-void tagged pointers is allowed. Pointer arithmetic
 // is disallowed with this specialization.
-template <typename Tag> class tagged_pointer<Tag, void> {
+template <typename Tag> class tagged_pointer<void, Tag> {
 public:
   using difference_type = ::std::ptrdiff_t;
   using pointer = void *;
@@ -862,14 +879,14 @@ void *malloc_base(PolicyOrTag &&policy_or_tag, const ::std::size_t num_bytes) {
 
 template <typename PolicyOrTag>
 auto malloc(PolicyOrTag &&policy_or_tag, const ::std::size_t num_bytes) {
-  return tagged_pointer<internal::policy_or_tag_to_tag_t<PolicyOrTag>, void>(
+  return tagged_pointer<void, internal::policy_or_tag_to_tag_t<PolicyOrTag>>(
       internal::malloc_base(::std::forward<PolicyOrTag>(policy_or_tag),
                             num_bytes));
 }
 
 template <typename T, typename PolicyOrTag>
 auto malloc(PolicyOrTag &&policy_or_tag, const ::std::size_t num_elements) {
-  return tagged_pointer<internal::policy_or_tag_to_tag_t<PolicyOrTag>, T>(
+  return tagged_pointer<T, internal::policy_or_tag_to_tag_t<PolicyOrTag>>(
       static_cast<T *>(
           internal::malloc_base(::std::forward<PolicyOrTag>(policy_or_tag),
                                 num_elements * sizeof(T))));
@@ -917,34 +934,55 @@ device_pointer<T> malloc_device(const std::size_t num_elements) {
 static inline device_pointer<void> malloc_device(const std::size_t num_bytes) {
   return device_pointer<void>(num_bytes);
 }
+#ifdef DPCT_USM_LEVEL_NONE
 template <typename T>
-device_pointer<T> device_new(device_pointer<T> p, const T &value,
-                             const std::size_t count = 1) {
-  std::vector<T> result(count, value);
-  p.buffer = sycl::buffer<T, 1>(result.begin(), result.end());
-  return p + count;
+device_pointer<T> device_new(device_pointer<void> p, const T &value,
+                             const std::size_t count) {
+  auto converted_buf = p.buffer.template reinterpret<T>(sycl::range<1>(count));
+  ::std::uninitialized_fill(
+      oneapi::dpl::execution::make_device_policy(dpct::get_default_queue()),
+      oneapi::dpl::begin(converted_buf),
+      oneapi::dpl::end(converted_buf), value);
+  return device_pointer<T>(converted_buf, p.idx);
 }
+// buffer manages lifetime
+template <typename T> void free_device(device_pointer<T> ptr) {}
+#else
 template <typename T>
-device_pointer<T> device_new(device_pointer<T> p, const std::size_t count = 1) {
+device_pointer<T> device_new(device_pointer<void> p, const T &value,
+                             const std::size_t count = 1) {
+  dpct::device_pointer<T> converted_p(static_cast<T *>(p.get()));
+  ::std::uninitialized_fill(
+      oneapi::dpl::execution::make_device_policy(dpct::get_default_queue()),
+      converted_p, converted_p + count, value);
+  return converted_p;
+}
+template <typename T> void free_device(device_pointer<T> ptr) {
+  sycl::free(ptr.get(), dpct::get_default_queue());
+}
+#endif
+template <typename T>
+device_pointer<T> device_new(device_pointer<void> p,
+                             const std::size_t count = 1) {
   return device_new(p, T{}, count);
 }
 template <typename T>
 device_pointer<T> device_new(const std::size_t count = 1) {
-  return device_pointer<T>(count);
+  return device_new(device_pointer<void>(sizeof(T) * count), T{}, count);
 }
-
-template <typename T> void free_device(device_pointer<T> ptr) {}
 
 template <typename T>
 typename std::enable_if<!std::is_trivially_destructible<T>::value, void>::type
 device_delete(device_pointer<T> p, const std::size_t count = 1) {
-  for (std::size_t i = 0; i < count; ++i) {
-    p[i].~T();
-  }
+  ::std::destroy(oneapi::dpl::execution::make_device_policy(dpct::get_default_queue()),
+                 p, p + count);
+  free_device(p);
 }
 template <typename T>
 typename std::enable_if<std::is_trivially_destructible<T>::value, void>::type
-device_delete(device_pointer<T>, const std::size_t count = 1) {}
+device_delete(device_pointer<T> p, const std::size_t count = 1) {
+  free_device(p);
+}
 
 template <typename T> device_pointer<T> get_device_pointer(T *ptr) {
   return device_pointer<T>(ptr);
